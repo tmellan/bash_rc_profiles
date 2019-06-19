@@ -1,0 +1,190 @@
+#Functions
+rcx1 () { rsync -av --progress "$@" XXXXXXXXX@XXXXXXXXXXXXXXX.ac.uk:/work/XXXXXXX/.; }
+rrcx1 () { rsync -av --progress XXXXXXX@XXXXXXXXXXXXXX.ac.uk:"$@" .; }
+finh () { find . -wholename "*$@*" -print; }
+fine () { find /home/XXXXXXXXX/ -name "*$@*" -print && find /workspace/XXXXXXXXX/ -name "*$@*" -print; }
+rar () { rsync -av --progress "$@" XXXXXXXX@XXXXXXX.ac.uk:/work/e89/e89/XXXXXXX/. ; }
+getFahT () { echo "T(K) Fah(meV/at)" > Fah_T; for i in `echo 500 1000 1500 2000`; do cd $i ; getdu ; echo $i $(tail int*)  >> ../Fah_T ; cd ../ ; done ; cat Fah_T ; }
+meamJobs () { top -bn1 | grep MEAMfit | awk '{print $1}' | xargs -n 1 pwdx ; }
+trans () { ruby -e'puts readlines.map(&:split).transpose.map{|x|x*" "}' }
+meanL () { for i in `echo lambda*`; do awk '{print $3}' $i/stats.out | tail -n 1 ; done | awk -v N=1 '{ sum += $N } END { if (NR > 0) print sum / NR }' }
+q0 () { for i in $list666; do cd $i ; meanL.sh ; cd ../ ; done  ; for i in $list666; do cd $i ; echo $i $(cat FahUncUnorr)   ; cd ../ ; done > FahUncUncorr ; cat  FahUncUncorr ; for i in {1.2};do  echo done ; done }
+t0 () { for  i in `echo 4*` ; do cd $i ; t1 ; t2 ; t3 ; cd ../ ; done }
+t1 () { dir=`pwd`; rm avg_dudl ; for i in $list666; do cd $i ; getdu ; cd $dir ; done }
+t2 () { dir=`pwd` ; rm all_dudl ; for i in $list666; do cd $i ; cat avg_dUdL ; cat avg_dUdL >> $dir/all_dudl ; cd $dir ; done }
+t3 () { dir=`pwd` ; rm int_all ; for i in $list666; do cd $i ; cat integrated_value ; cat integrated_value >> $dir/int_all ; cd $dir ; done }
+t4 () { for i in $list666; do cd $i ; sed -n '6,6p' avg_dUdL >> ../mid_all ; cd ../ ; done }
+m1 () { rm mvt_int_all ; for i in $list666; do tail -n 1 $i/mvtTILD/dUdL | awk '{print $8}' ; tail -n 1 $i/mvtTILD/dUdL | awk '{print $8}'  >> mvt_int_all ; done  }
+m2 () { for i in `echo 4*a` ; do cd $i ; m1 ; cd ../ ; done }
+b3 () { for i in `echo *test.*.*`; do cd $i ; basename `pwd` ;  b2 ; cd ../ ; done  }
+disjobs () { echo `jobs` ; for i in {1..25}; do disown %$i ; done }
+sten () { head -10 "$@"; }
+swatch () { tail -f "$@"; }
+repeat()
+{
+        local i max
+        max=$1; shift;
+        for ((i=1; i <= max ; i++));
+        do eval "$@";
+        done
+}
+
+####### MAILBOX #########
+export MAIL=t.mellan@imperial.ac.uk
+
+ulimit -s unlimited
+
+####### Aliases #########
+alias phonny="module load  python/3.5.3  phono3py/1.11.13.47  phonopy/1.11.12.92  dynaphopy/1.15.1 v_sim"
+alias head2="head -n 20"
+alias cdd="cd /data/users/$USEARNAME/"
+alias cleanmesh="rm mesh.yaml */*/mesh.yaml */*/*/mesh.yaml */*/*/*/mesh.yaml"
+alias cleanmeam="rm potparas_best* datapnts_best* pairpot* elecdens* embfunc* bestoptfuncs *.edv fitted_quantities.out ObjFuncValsLocOpt.dat largestrho.dat meam.out idsforsmallestsepns smallestsepnvsstruc.dat sepnHistogram.out *.eb *.pv"
+alias sw="ssh -Y wannier"
+alias sc="ssh -Y cx1"
+alias qm="qstat -u $USERNAME"
+alias kkk="kill gnuplot && kill x11"
+####### TERMINAL STYLE ########
+export PS1="\[\033[38;5;39m\]\u@\h\[$(tput sgr0)\]\[\033[38;5;176m\]:\[$(tput sgr0)\]\[\033[38;5;211m\]\w>\[$(tput sgr0)\]"
+
+########### PATHS #############
+#Jan17_src_intel contain the new MEAMfit executables - 1_17Jan.MEAMfit(.gibbs)
+#note MEAM.jan18 compiled for multiple elements
+#Workstation NEW
+#######vasp langevin settings###########
+#module load intel-suite/2015.3.187 openmpi/1.8.7 mkl wannier90 "fftw"
+#######rsync in backgroun:
+#nohup rsync -av * person@place:/dir/.  ;  ; bg ; jobs ; disown %lastjob
+#######kill top jobs
+#for i in `top -b -n 1 | grep MEAM | awk '{print $1}'`; do kill $i ; done
+# LOcal backup    rsync -av /workspace/xxxxxxxxxxx/* /mnt/d43a716e-edce-49c8-9936-ac5f305fd006/.alias ssh="ssh -Y"
+alias sh="ssh -Y imperial_workstation"
+alias sc="ssh -Y cx1"
+alias sa="ssh -Y imp_ar"
+alias vaspti="./vasp2.sh > vasp2.out"
+alias phon_therm="phonopy -t -p mesh.conf > phonopy_thermo"
+alias vasptilamp='/workspace/XXXXXXXXX/vasp_Langevin/vasp5_TI_lammps/vasp_5.3.5/vasp'
+alias cdw='cd /workspace/XXXXXX/'
+alias cdh='cd'
+alias ccc="cat /workspace/$USERNAME/full_TU-TILD_results/full_TUTILD_T_all_vol_int"
+alias th="ssh -Y thos"
+alias o="xdg-open "
+alias backup1="nohup rsync -av /workspace/#########n/* ##########@archer:/epsrc/e89/e89-ic_m/#################/."
+alias s2='ssh -Y cx2'
+alias ty='ssh -Y tycpc34'
+alias vsim="module load v_sim && v_sim"
+alias tild="integrate_TU-TILD.x > 1.out &"
+alias getdu="getdUdL.sh ; cat avg_* ; integrate"
+alias nonan="sed -i '/NaN/d' dUdL"
+alias t_kap="cp ../../extract_lattice_conductivity.py . ; python  extract_lattice_conductivity.py ; paste <(awk '{print $1}' temp313131.dat) <(awk '{print $1}' kappa313131.dat)  > t_kappa_31.dat"
+alias summary="cat bestoptfuncs && b3 && cat T_all_vol_int"
+alias cdm="cd /media/$USERNAME/BU_tycpc34_tam"
+list666="300 760 1900 2500 3200 3805"
+alias ttt="t1 ; t2 ; t3"
+alias ameam="cp ../get_Alldudl_all_int.sh ../temps ../runMEAMtest.sh . &&  t0 && ./get_Alldudl_all_int.sh && ./runMEAMtest.sh && pwd && b3 && cat T_all_vol_int"
+alias p1=" paste ../temps `echo 4*/int* ` > t_int_all ; cat t_int_all"
+alias p2="paste ../temps `echo 4*/mid*` | awk '{print $1, $3, $5, $7, $9, $11}' | column -t > t_mid_all"
+alias b1="basename `pwd` && tail -n 20 1.out | grep ' 1 : '"
+alias b2="sed -n '40,60p' t.out | grep 'Optimization function='"
+alias lookev="cat e-v.dat && head volume-temperature.dat && tail volume-temperature.dat"
+alias dy="diff -y"
+alias meamclean='rm datapnts_be* elecdens* embfunc* idsforsmallestsepns pairpot* potparas_bes* sepnHistogram.out smallestsepnvsstruc.dat *eam.all*'
+alias vibash="vi /home/$USERNAME/.bashrc"
+alias s='source /home/$USERNAME/.bashrc && source /home/tamellan/.profile && source ~/.bash_profile'
+alias vibashp="vi /home/$USERNAME/.bash_profile"
+alias lb='ls -Sr -alh && pwd'
+alias la='ls -al -h -rt && pwd'
+alias ll='ls && pwd'
+alias ls='ls'
+alias ssh='ssh -o ServerAliveInterval=120'
+alias bigal='find . -type f -print | ls -h -lR -s | sort -n | tail'
+alias sbigal='sudo find . -type f -print | ls -h -lR -s | sort -n | tail'
+alias bighere='find . -type f -print | ls -lh -s | sort -n | tail'
+alias size='du -sch *'
+alias space='df -h .'
+alias p='python'
+alias pi='python *.py'
+alias g="gnuplot gnu*"
+
+
+####### TERMINAL STYLE ########
+export PS1="\[\033[38;5;39m\]\u@\h\[$(tput sgr0)\]\[\033[38;5;176m\]:\[$(tput sgr0)\]\[\033[38;5;211m\]\w>\[$(tput sgr0)\]"
+
+########### PATHS #############
+#Jan17_src_intel contain the new MEAMfit executables - 1_17Jan.MEAMfit(.gibbs)
+#note MEAM.jan18 compiled for multiple elements
+export PATH=$PATH:/common/debian/9.1/PythonPackages/python/3.5/phonopy/phonopy-1.11.12.92/bin/
+export PATH=$HOME/.local/bin:$PATH
+export PATH=$PATH:/workspace/tamellan/src/lammps_with_rfmeam_11Aug2017/lammps-11Aug17/src/
+export PATH=$PATH:/workspace/tamellan/src/atomsk/src/
+export PATH=$PATH:/workspace/tamellan/src/MEAMfit_v2_25_9_18/src/
+export PATH=$PATH:/workspace/tamellan/src/MEAMfit_v2_1-3-18/src
+export PATH=$PATH:/workspace/tamellan/src/Thermodynamics/ti_
+export PATH=$PATH:/workspace/tamellan/src/Thermodynamics
+export PATH=$PATH:/workspace/tamellan/src/integrate_TU-TILD_for_Tom
+export PATH=$PATH:/workspace/tamellan/src/meamfitV2_2Dec2017/src
+export PATH=$PATH:/home/tamellan/p4vasp/bin
+export PATH=$PATH:/usr/bin
+export PATH=$PATH:/workspace/tamellan/src/MEAMfit_v2_7-11-17/Normal/src
+export PATH=$PATH:/bin
+export PATH=$PATH:/sbin
+export PATH=$PATH:/workspace/tamellan/src/MEAMfit_v2_8-11-17/src
+export PATH=$PATH:/workspace/tamellan/src/Ascii-phonons/ascii-phonons
+export PATH=$PATH:/workspace/tamellan/src/Ascii-phonons/ascii-phonons/scripts/
+export PATH=$PATH:/workspace/tamellan/src/Blender/blender-2.78c-linux-glibc219-x86_64
+export PATH=$PATH:/workspace/tamellan/src/MEAMfit_v2.0_fast/src
+export PATH=$PATH:/workspace/tamellan/src/MEAMfitv1.06_integrate_TU-TILD
+export PATH=$PATH:/workspace/tamellan/src/newMEAMfit_Jan18/Jan18_src_intel
+export PATH=$PATH:/workspace/tamellan/src/newMEAMfit_Jan18/Jan18_src_intel_gibbs
+export PATH=$PATH:/workspace/tamellan/src/NewMEAMfit_Nov2016/Jan17_src_intel
+export PATH=$PATH:/workspace/tamellan/src/NewMEAMfit_Nov2016/Jan17_src_intel_gibbs
+export PATH=$PATH:/workspace/tamellan/src/Thermodynamics/utilitiesNew
+export PATH=$PATH:/workspace/tamellan/src/Thermodynamics/fortran
+export PATH=$PATH:/workspace/tamellan/src/Thermodynamics/utilities
+export PATH=$PATH:/workspace/tamellan/src/Thermodynamics/mathematica
+export PATH=$PATH:/workspace/tamellan/src/Thermodynamics/AndysScripts
+export PATH=$PATH:/workspace/tamellan/qha/Thermodynamics/vasp_analyze/
+export PATH=$PATH:/workspace/tamellan/src/Thermodynamics/python
+export PATH=$PATH:/workspace/tamellan/src/sod-0.40/src/
+export PATH=$PATH:/workspace/tamellan/src/sod-0.40/exe/
+export PATH=$PATH:/workspace/tamellan/src/sod-0.40/
+export PATH=$PATH:/workspace/tamellan/src/NewMEAMfit_Nov2016/src_intel/
+export PATH=$PATH:/workspace/tamellan/src/NewMEAMfit_Nov2016/src_intel_gibbs/
+export PATH=$PATH:/workspace/tamellan/src/GibbsBogFit/src/
+export PATH=$PATH:/workspace/tamellan/src/Thermodynamics/
+export PATH=$PATH:/workspace/tamellan/src/integrate_TU-TILD/
+export PATH=$PATH:/workspace/tamellan/src/
+export PATH=$PATH:/workspace/tamellan/meam/myMeam/src
+export PATH=$PATH:/workspace/tamellan/cloned/physics
+export PATH=$PATH:/workspace/tamellan/scripts_imp
+export PATH=$PATH:/workspace/tamellan/archer_MD/oppvasp/
+export PATH=$PATH:/workspace/tamellan/archer_MD/scripts/
+inpat () { echo $@ | xargs -n 1 ls; }
+kp () { kde-open *$@* ; }
+vasplang () { module load intel-suite/2015.3.187 openmpi/1.8.7 && module load mkl wannier90 && module load "fftw" && nice -1 /workspace/tamellan/vasp_Langevin/vasp5_TI_lammps/vasp_5.3.5/vasp 2>&1 | tee out."$@"; }
+ml () { module load '$@'; }
+batch3 () { nice -1 ./vasp3.sh 2>&1 | tee out."$@"; }
+batch4 () { nice -1 ./vasp4.sh 2>&1 | tee out."$@"; }
+batch4 () { nice -1 ./vasp5.sh 2>&1 | tee out."$@"; }
+phon_force_to () { './phonopy.py -f disp-{001..00'$@'}/vasprun.xml'; }
+
+
+###################
+# USEFUL COMMANDS #
+###################
+# diff -y file1 file2 !side-by-side comparison file1 file2
+# date ! print date
+# file name ! filetype for name
+# head or tail -f ! relatime update file and show 1st or last 10 lines
+# wc ! print byte, word and line counts in a file
+# vi tips, ZZ to :wq!, /wh (?wh) to forward (backwards) jump to 'whatever', dw delete current word, :s/s1/s2 subtitute word s1 with s2 on this line, :lr/s/s1/s2/g replace all s1 with s2, n got to n from here, :n go to line n, dd delete, p paste, yy yank copy, 3dd delete down three lines, xp switch to wsitch, ctrl v enter visual mode higlight columns etc
+#Workstation NEW
+#######vasp langevin settings###########
+#module load intel-suite/2015.3.187 openmpi/1.8.7 mkl wannier90 "fftw"
+#######rsync in backgroun:
+#nohup rsync -av * person@place:/dir/.  ;  ; bg ; jobs ; disown %lastjob
+#######kill top jobs
+#for i in `top -b -n 1 | grep MEAM | awk '{print $1}'`; do kill $i ; done
+# LOcal backup    rsync -av /workspace/xxxxxxxxxxx/* /mnt/d43a716e-edce-49c8-9936-ac5f305fd006/.
+#export PATH=$PATH:/usr/bin/
+test -s ~/.alias && . ~/.alias || true
